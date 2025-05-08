@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aniicone's Café</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <header class="header">
+        <div class="menu-container">
+            <a href="{{ url_for('menu') }}" class="menu-btn">Menu</a>
+        </div>
+        {% if session.get('user') %}
+            <span class="welcome-message">Welcome, {{ session['name'] }}!</span>
+        {% endif %}
+        <div class="auth-buttons">
+            <a href="{{ url_for('checkout') }}" class="menu-btn">Cart</a>
+            {% if session.get('user') %}
+                <a href="{{ url_for('logout') }}" class="auth-btn">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="auth-btn">Login</a>
+                <a href="{{ url_for('register') }}" class="auth-btn">Register</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Aniicone's Café</h1>
+            <p>Experience the perfect blend of coffee, tea, and delightful treats in a cozy atmosphere</p>
+            <a href="{{ url_for('menu') }}" class="btn">View Our Menu</a>
+        </div>
+    </section>
+</body>
+</html> 

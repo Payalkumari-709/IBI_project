@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Aniicone's Café</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Add jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="menu-container">
+            <a href="{{ url_for('home') }}" class="menu-btn">Home</a>
+            <a href="{{ url_for('menu') }}" class="menu-btn">Menu</a>
+        </div>
+        {% if session.get('user') %}
+            <span class="welcome-message">Welcome, {{ session['name'] }}!</span>
+        {% endif %}
+        <div class="auth-buttons">
+            {% if session.get('user') %}
+                <a href="{{ url_for('logout') }}" class="auth-btn">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="auth-btn">Login</a>
+                <a href="{{ url_for('register') }}" class="auth-btn">Register</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="checkout-container">
+        <h2>Your Order</h2>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-item">
+                <span>Subtotal:</span>
+                <span id="subtotal">₹0.00</span>
+            </div>
+            <div class="summary-item">
+                <span>Tax (10%):</span>
+                <span id="tax">₹0.00</span>
+            </div>
+            <div class="summary-item total">
+                <span>Total:</span>
+                <span id="total">₹0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="proceedToPayment()">Proceed to Payment</button>
+            <button class="print-btn" onclick="generateAndPrintPDF()">Print Bill</button>
+        </div>
+    </div>
+
+    <script>
+        // Load cart items from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cartItems');
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <p>₹${item.price.toFixed(2)} × ${item.quantity}</p>
+                    </div>
+                    <div class="cart-item-total">
+                        <span>₹${itemTotal.toFixed(2)}</span>
+                        <button onclick="removeFromCart('${item.name}')" class="remove-btn">×</button>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+
+            updateTotals(subtotal);
+        });
+
+        function updateTotals(subtotal) {
+            const tax = subtotal * 0.1;
+            const total = subtotal + tax;
+
+            document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `₹${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `₹${total.toFixed(2)}`;
+        }
+
+        function removeFromCart(itemName) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.name !== itemName);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Reload the page to update the display
+            location.reload();
+        }
+
+        function proceedToPayment() {
+            // Here you would typically redirect to a payment gateway
+            alert('Payment functionality will be implemented here');
+        }
+
+        function generateAndPrintPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Add header
+            doc.setFontSize(20);
+            doc.text("Aniicone's Café", 105, 20, { align: "center" });
+            
+            // Add date
+            doc.setFontSize(12);
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 30);
+            
+            // Add items
+            doc.setFontSize(14);
+            doc.text("Order Details:", 20, 40);
+            
+            let yPos = 50;
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                doc.setFontSize(12);
+                doc.text(`${item.name}`, 20, yPos);
+                doc.text(`INR ${item.price.toFixed(2)} × ${item.quantity}`, 120, yPos);
+                doc.text(`INR ${itemTotal.toFixed(2)}`, 180, yPos);
+                yPos += 10;
+            });
+            
+            // Add summary
+            yPos += 10;
+            const tax = subtotal * 0.1;
+            const total = subtotal + tax;
+            
+            doc.text("Subtotal:", 120, yPos);
+            doc.text(`INR ${subtotal.toFixed(2)}`, 180, yPos);
+            yPos += 10;
+            
+            doc.text("Tax (10%):", 120, yPos);
+            doc.text(`INR ${tax.toFixed(2)}`, 180, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(14);
+            doc.text("Total:", 120, yPos);
+            doc.text(`INR ${total.toFixed(2)}`, 180, yPos);
+            
+            // Add thank you message
+            yPos += 20;
+            doc.setFontSize(12);
+            doc.text("Thank you for your order!", 105, yPos, { align: "center" });
+            
+            // Save and open PDF
+            doc.save("bill.pdf");
+        }
+    </script>
+</body>
+</html> 
