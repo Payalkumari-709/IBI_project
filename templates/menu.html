@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Aniicone's Café</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="menu-container">
+            <a href="{{ url_for('home') }}" class="menu-btn">Home</a>
+        </div>
+        {% if session.get('user') %}
+            <span class="welcome-message">Welcome, {{ session['name'] }}!</span>
+        {% endif %}
+        <div class="auth-buttons">
+            <a href="{{ url_for('checkout') }}" class="menu-btn">Cart</a>
+            {% if session.get('user') %}
+                <a href="{{ url_for('logout') }}" class="auth-btn">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="auth-btn">Login</a>
+                <a href="{{ url_for('register') }}" class="auth-btn">Register</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="menu-categories">
+        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn" data-category="drinks">Drinks</button>
+        <button class="category-btn" data-category="burger">Burger</button>
+        <button class="category-btn" data-category="pizza">Pizza</button>
+    </div>
+
+    <div class="menu-items">
+        <!-- Drinks Items -->
+        <div class="menu-item" data-category="drinks">
+            <img src="{{ url_for('static', filename='images/cold-coffee.jpg') }}" alt="Cold Coffee">
+            <h3>Cold Coffee</h3>
+            <p class="price">₹20</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="drinks">
+            <img src="{{ url_for('static', filename='images/cold-coffee-icecream.jpg') }}" alt="Cold Coffee With Ice Cream">
+            <h3>Cold Coffee With Ice Cream</h3>
+            <p class="price">₹40</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="drinks">
+            <img src="{{ url_for('static', filename='images/hot-coffee.jpg') }}" alt="Hot Coffee">
+            <h3>Hot Coffee</h3>
+            <p class="price">₹15</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="drinks">
+            <img src="{{ url_for('static', filename='images/masala-chass.jpg') }}" alt="Masala Chass">
+            <h3>Masala Chass</h3>
+            <p class="price">₹20</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <!-- Burger Items -->
+        <div class="menu-item" data-category="burger">
+            <img src="{{ url_for('static', filename='images/regular-burger.jpg') }}" alt="Regular Burger">
+            <h3>Regular Burger</h3>
+            <p class="price">₹20</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="burger">
+            <img src="{{ url_for('static', filename='images/cheese-burger.jpg') }}" alt="Cheese Burger">
+            <h3>Cheese Burger</h3>
+            <p class="price">₹30</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="burger">
+            <img src="{{ url_for('static', filename='images/cheese-paneer-loded.jpg') }}" alt="Cheese Paneer Loded">
+            <h3>Cheese Paneer Loded</h3>
+            <p class="price">₹40</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="burger">
+            <img src="{{ url_for('static', filename='images/regular-burger-alu-tikki.jpg') }}" alt="Regular Burger (alu Tikki)">
+            <h3>Regular Burger (alu Tikki)</h3>
+            <p class="price">₹30</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="burger">
+            <img src="{{ url_for('static', filename='images/cheese-burger-alu-tikki.jpg') }}" alt="Cheese Burger (alu Tikki)">
+            <h3>Cheese Burger (alu Tikki)</h3>
+            <p class="price">₹40</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="burger">
+            <img src="{{ url_for('static', filename='images/cheese-paneer-loded-alu-tikki.jpg') }}" alt="Cheese Paneer Loded (alu Tikki)">
+            <h3>Cheese Paneer Loded (alu Tikki)</h3>
+            <p class="price">₹50</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <!-- Cone Pizza Items -->
+        <div class="menu-item" data-category="pizza">
+            <img src="{{ url_for('static', filename='images/regular-pizza.jpg') }}" alt="Regular Pizza">
+            <h3>Regular Pizza</h3>
+            <p class="price">₹50</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="pizza">
+            <img src="{{ url_for('static', filename='images/corn-pizza.jpg') }}" alt="Corn Pizza">
+            <h3>Corn Pizza</h3>
+            <p class="price">₹60</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="pizza">
+            <img src="{{ url_for('static', filename='images/paneer-pizza.jpg') }}" alt="Paneer Pizza">
+            <h3>Paneer Pizza</h3>
+            <p class="price">₹60</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="pizza">
+            <img src="{{ url_for('static', filename='images/corn-paneer-pizza.jpg') }}" alt="Corn Paneer Pizza">
+            <h3>Corn Paneer Pizza</h3>
+            <p class="price">₹70</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="menu-item" data-category="pizza">
+            <img src="{{ url_for('static', filename='images/extra-cheese.jpg') }}" alt="Extra Cheese">
+            <h3>Extra Cheese</h3>
+            <p class="price">₹100</p>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+
+    <script>
+        const isLoggedIn = {{ 'true' if session.get('user') else 'false' }};
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category filtering
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const menuItems = document.querySelectorAll('.menu-item');
+
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const category = btn.dataset.category;
+                    
+                    // Update active button
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Show/hide items
+                    menuItems.forEach(item => {
+                        if (category === 'all' || item.dataset.category === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Quantity controls and Add to Cart
+            document.querySelectorAll('.menu-item').forEach(item => {
+                const minusBtn = item.querySelector('.minus');
+                const plusBtn = item.querySelector('.plus');
+                const quantitySpan = item.querySelector('.quantity');
+                const addToCartBtn = item.querySelector('.add-to-cart');
+                const itemName = item.querySelector('h3').textContent;
+                const itemPrice = parseFloat(item.querySelector('.price').textContent.replace('₹', ''));
+
+                minusBtn.addEventListener('click', () => {
+                    let quantity = parseInt(quantitySpan.textContent);
+                    if (quantity > 0) {
+                        quantitySpan.textContent = quantity - 1;
+                    }
+                });
+
+                plusBtn.addEventListener('click', () => {
+                    let quantity = parseInt(quantitySpan.textContent);
+                    quantitySpan.textContent = quantity + 1;
+                });
+
+                addToCartBtn.addEventListener('click', () => {
+                    const quantity = parseInt(quantitySpan.textContent);
+                    if (quantity > 0) {
+                        if (isLoggedIn) {
+                            addToCart(itemName, itemPrice, quantity);
+                            quantitySpan.textContent = '0';
+                        } else {
+                            alert('Please login to add items to cart');
+                            window.location.href = "{{ url_for('login') }}";
+                        }
+                    }
+                });
+            });
+        });
+
+        function addToCart(name, price, quantity) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if item already exists in cart
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ name, price, quantity });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('Item added to cart!');
+        }
+    </script>
+</body>
+</html> 
